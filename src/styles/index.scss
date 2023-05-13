@@ -1,0 +1,57 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700&display=swap');
+@import './variables.scss';
+
+body {
+  margin: 0;
+  font-family: $body-font;   
+  font-size: 16px; 
+  color: $text-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body{
+  height: 100%;
+}
+#root{
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  //background-color: lime;
+}
+
+h1{
+  font-family: $title-font;
+  font-size: 37px;
+  font-weight: normal;
+  color: $primary-color;
+  padding: 0;
+  margin: 2rem;
+}
+
+h2{
+  font-size: 23px;
+  color: $secondary-color;
+  padding: 0;
+  margin: 3rem 0 0;
+}
+
+main.page{
+  flex: 1; 
+
+  .container{
+    margin: 2rem;
+  }
+
+  .full-width {
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
+
+  p{
+    color: $secondary-color;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}

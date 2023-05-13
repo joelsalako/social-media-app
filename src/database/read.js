@@ -1,0 +1,76 @@
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  getDoc,
+} from 'firebase/firestore';
+import { db } from './config';
+
+/**
+ * Loads all documentss from the Posts Collection.
+ * @returns
+ * Array with the Posts.
+ */
+export async function load() {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'posts'));
+    return processQuerySnapshot(querySnapshot);
+  } catch (error) {
+    throw new Error('Failed to load the database.');
+  }
+}
+
+/**
+ * Loads all promoted documents from the posts collection
+ * @returns
+ * Array for the posts.
+ */
+export async function loadPromoted() {
+  try {
+    const q = query(collection(db, 'posts'), where('promote', '==', true));
+    const querySnapshot = await getDocs(q);
+    return processQuerySnapshot(querySnapshot);
+  } catch (error) {
+    throw new Error('Failed to query the database.');
+  }
+}
+
+/**
+ * Converts a Firebase query snapshot into an array.
+ * @param {object} querySnapshot
+ *  The query snapshot returned by Firebase.
+ * @returns
+ *  Array with the data
+ */
+function processQuerySnapshot(querySnapshot) {
+  const data = [];
+  querySnapshot.forEach((doc) => {
+    data.push({
+      ...doc.data(),
+      id: doc.id,
+    });
+  });
+  return data;
+}
+
+/**
+ *
+ * @param {*} id
+ * @returns
+ */
+export async function loadById(id) {
+  try {
+    const docRef = doc(db, 'posts', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
